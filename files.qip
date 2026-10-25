@@ -1,0 +1,61 @@
+set_global_assignment -name SYSTEMVERILOG_FILE Aquarium.sv
+set_global_assignment -name SDC_FILE Aquarium.sdc
+set_global_assignment -name QIP_FILE rtl/pll.qip
+
+# the machine
+set_global_assignment -name SEARCH_PATH rtl
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_ram.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_core.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_video.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_tmap.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_sprites.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_sound.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_oki.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_cache.sv
+
+# the MiSTer platform layer
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_sdram.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_loader.sv
+set_global_assignment -name SYSTEMVERILOG_FILE rtl/aquarium_fastload.sv
+
+# fx68k (GPL-3.0-or-later, Jorge Cwik; modules/VENDOR.md): its microcode ROMs microrom.mem / nanorom.mem are read from its folder
+set_global_assignment -name SEARCH_PATH modules/fx68k
+set_global_assignment -name SYSTEMVERILOG_FILE modules/fx68k/fx68k.sv
+set_global_assignment -name SYSTEMVERILOG_FILE modules/fx68k/fx68kAlu.sv
+set_global_assignment -name SYSTEMVERILOG_FILE modules/fx68k/uaddrPla.sv
+
+# tv80 (MIT, Guy Hutchison), with the clock-enable wrapper tv80s_cen.v (modules/VENDOR.md); TV80_REFRESH builds its R register,
+# which MAME's Z80 counts on every opcode fetch and interrupt
+set_global_assignment -name VERILOG_MACRO "TV80_REFRESH=1"
+set_global_assignment -name VERILOG_FILE modules/cpu-tv80/tv80_alu.v
+set_global_assignment -name VERILOG_FILE modules/cpu-tv80/tv80_core.v
+set_global_assignment -name VERILOG_FILE modules/cpu-tv80/tv80_mcode.v
+set_global_assignment -name VERILOG_FILE modules/cpu-tv80/tv80_reg.v
+set_global_assignment -name VERILOG_FILE modules/cpu-tv80/tv80s_cen.v
+
+# jt51 (GPL-3.0-or-later, Jose Tejada; modules/VENDOR.md)
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_acc.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_csr_op.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_eg.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_exp2lin.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_exprom.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_kon.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_lfo.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_lin2exp.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_mmr.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_mod.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_noise.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_noise_lfsr.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_op.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_pg.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_phinc_rom.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_phrom.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_pm.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_reg.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_reg_ch.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_sh.v
+set_global_assignment -name VERILOG_FILE modules/jt51/jt51_timers.v
+
+# rmonic79's CRT Adjust (GPL-3.0-or-later, modules/VENDOR.md)
+set_global_assignment -name SYSTEMVERILOG_FILE modules/crt-adjust/crt_adjust.sv

@@ -1,0 +1,78 @@
+<misterromdescription>
+    <name>Aquarium (Japan)</name>
+    <setname>aquariumj</setname>
+    <mameversion>0289</mameversion>
+    <year>1996</year>
+    <manufacturer>Excellent System</manufacturer>
+    <players>2</players>
+    <joystick>8</joystick>
+    <rotation>horizontal</rotation>
+    <rbf>aquarium</rbf>
+    <platform>Aquarium</platform>
+
+    <!--
+      The image of the Aquarium core (rtl/aquarium_loader.sv, tools/aquarium_rom.py), MAME's regions in MAME's byte order (the
+      ROM_LOAD16_WORD_SWAP ROMs swapped back by a one-part interleave), the same layout for both sets:
+        0x000000  0x080000  maincpu    the 68000's program
+        0x080000  0x040000  audiocpu   the Z80's program and its banks
+        0x0C0000  0x040000  oki        the MSM6295's samples (the first half of the ROM; the second is 0xFF and out of its reach)
+        0x100000  0x020000  txt        the 8 x 8 tiles
+        0x120000  0x080000  mid        the 16 x 16 tiles' low 4 bits
+        0x1A0000  0x020000  mid_hi     their fifth bit
+        0x1C0000  0x080000  bak        the other layer's
+        0x240000  0x020000  bak_hi
+        0x260000  0x100000  spritegen  the sprites
+      Expects the MAME 0.289 merged romset or the split sets: parts are found by name and CRC. The md5 is MiSTer's (of the parts'
+      bytes as read, before the interleave; the image itself is 0c218f7b52a91ef5569dd5b66122e891).
+      address= is the fast load: a recent Main_MiSTer copies the image into the DDR3 at that byte and the core reads it from there
+      (rtl/aquarium_fastload.sv); an older one streams it.
+    -->
+
+    <!--
+      DIP switches (ioctl index 254): byte 0 is the DSW word's bits 7:0 (SW1), byte 1 its bits 15:8 (SW2), bit for bit as MAME reads
+      d80080; a 1 is "off". MAME's defaults: FF, FF. The service mode is a switch of its own (SYSTEM bit 12): F2 on a keyboard.
+    -->
+    <switches default="FF,FF" base="16">
+        <dip bits="0,1"   name="Difficulty" ids="Hardest,Hard,Easy,Normal"/>
+        <dip bits="2,3"   name="Winning Rounds (vs. CPU)" ids="1/1 (not in the manual),3/5,2/3,1/1"/>
+        <dip bits="4,5"   name="Winning Rounds (vs. player)" ids="1/1 (not in the manual),3/5,2/3,1/1"/>
+        <dip bits="8,10"  name="Coinage" ids="5C/1C,4C/1C,3C/1C,2C/1C,1C/4C,1C/3C,1C/2C,1C/1C"/>
+        <dip bits="12"    name="Flip Screen" ids="On,Off"/>
+        <dip bits="13"    name="Demo Sounds" ids="Off,On"/>
+    </switches>
+
+    <!-- what the buttons do, measured in MAME 0.289 and as the game's control panel picture names them: button 1 turns the falling piece
+         clockwise ("Rotation Right"), button 2 counter-clockwise ("Rotation Left"); both together are "Magic" -->
+    <buttons names="Rotate Right,Rotate Left,Start,Coin" default="A,B,Start,Select"/>
+
+    <rom index="0" zip="aquariumj.zip|aquarium.zip" md5="cc7f8de1beb50cef78e862245f75d8dd" address="0x32000000">
+        <!-- maincpu (ROM_LOAD16_WORD_SWAP: the bytes of each word swapped) -->
+        <interleave output="16">
+            <part name="excellent_3.13h" crc="344509a1" map="12"/>
+        </interleave>
+        <!-- audiocpu -->
+        <part name="excellent_5.10c" crc="fa555be1"/>
+        <!-- oki: the first 256 KB -->
+        <part name="excellent_4.7d" crc="9a4af531" length="0x40000"/>
+        <!-- txt (ROM_LOAD16_WORD_SWAP: the bytes of each word swapped) -->
+        <interleave output="16">
+            <part name="excellent_2.17e" crc="aa071b05" map="12"/>
+        </interleave>
+        <!-- mid (ROM_LOAD16_WORD_SWAP: the bytes of each word swapped) -->
+        <interleave output="16">
+            <part name="excellent_1.15b" crc="575df6ac" map="12"/>
+        </interleave>
+        <!-- mid_hi -->
+        <part name="excellent_6.15d" crc="9065b146"/>
+        <!-- bak (ROM_LOAD16_WORD_SWAP: the bytes of each word swapped) -->
+        <interleave output="16">
+            <part name="excellent_8.14g" crc="915520c4" map="12"/>
+        </interleave>
+        <!-- bak_hi -->
+        <part name="excellent_7.17g" crc="b96b2b82"/>
+        <!-- spritegen (ROM_LOAD16_WORD_SWAP: the bytes of each word swapped) -->
+        <interleave output="16">
+            <part name="d23c8000.1f" crc="14758b3c" map="12"/>
+        </interleave>
+    </rom>
+</misterromdescription>
