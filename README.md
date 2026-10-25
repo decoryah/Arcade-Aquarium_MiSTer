@@ -5,7 +5,15 @@ a YM2151 and an MSM6295, three tilemaps and a sprite generator. Written from MAM
 with `excellent_spr.cpp` and the devices it uses), with MAME as the reference for everything; the platform layer follows the owner's
 Rabbit and Hexion cores.
 
-No ROMs or other copyrighted data are in this repository; you supply your own MAME `aquarium.zip`.
+<p align="center">
+  <img src="docs/images/title.png" width="400" alt="Aquarium's title screen">
+  <img src="docs/images/gameplay.png" width="400" alt="Aquarium's attract-mode demo: both boards with their fish">
+</p>
+
+The title screen and the attract mode's demo as the core draws them (the system bench, `sim/run_sys.sh`, on the core's 270-line
+raster; doubled).
+
+No ROMs are in this repository; you supply your own MAME `aquarium.zip`.
 
 **Status.** Simulated with the game's real programs and compared with MAME 0.289 (see "What is verified"); built with Quartus 17.0.2
 (38 % of the ALMs, 54 % of the RAM blocks, 34 % of the DSPs; the timing met at 96 MHz with 0.32 ns of setup and 0.25 ns of hold
